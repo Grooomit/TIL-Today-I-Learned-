@@ -3,7 +3,7 @@
 
 ## Java
 
->> Java basic
+> Java basic
 
 ## Spring Framework
 
