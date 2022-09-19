@@ -14,10 +14,12 @@
     
     ⇒ 클라이언트 측의 요청을 전달 받아서 비즈니스 로직을 거친 후에 Model 데이터가 만들어지면, 이 Model 데이터를 View로 전달하는 역할을 합니다.
     
-
+ 
+ 
 - Spring MVC 동작 방식
     - Client가 요청 데이터 전송 → Controller가 요청 데이터 수신 → 비즈니스 로직 처리 → Model 데이터 생성 → Controller에게 Model 데이터 전달 → Controller가 View에게 Model 데이터 전달 → View가 응답 데이터 생성
-
+ 
+ 
 - Spring MVC 구성 요소
     
     ![image](https://user-images.githubusercontent.com/107091097/191025216-e4dd2e66-fc5f-4a83-a7fd-946a31e3350f.png)
@@ -42,8 +44,8 @@
     11. `View`는 응답 데이터를 생성해서 다시 DispatcherServlet에게 전달합니다.
     12. `DispatcherServlet`은 **View로부터 전달 받은 응답 데이터를 최종적으로 클라이언트에게 전달**합니다.
 
-## Controller
 
+## Controller
 
 ### Controller 구성요소
 
