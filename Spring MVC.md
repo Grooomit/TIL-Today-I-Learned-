@@ -32,9 +32,6 @@
         
     4. 요청을 처리할 Controller 클래스를 찾았으니 이제는 **실제로 클라이언트 요청을 처리할 Handler 메서드**를 찾아서 호출해야 합니다. `DispatcherServlet`은 Handler 메서드를 직접 호출하지 않고, HandlerAdpater에게 **Handler 메서드 호출을 위임**합니다.
     5. `HandlerAdapter`는 DispatcherServlet으로부터 전달 받은 Controller 정보를 기반으로 **해당 Controller의 Handler 메서드를 호출**합니다.
-        
-        > 이제 전체 처리 흐름의 반환점을 돌았습니다. 이제부터는 반대로 되돌아 갑니다. ^^
-        > 
     6. `Controller`의 Handler 메서드는 비즈니스 로직 처리 후 리턴 받은 **Model 데이터를 HandlerAdapter에게 전달**합니다.
     7. `HandlerAdapter`는 전달받은 **Model 데이터와 View 정보를 다시 DispatcherServlet에게 전달**합니다.
     8. `DispatcherServlet`은 전달 받은 View 정보를 다시 ViewResolver에게 **전달해서 View 검색을 요청**합니다.
