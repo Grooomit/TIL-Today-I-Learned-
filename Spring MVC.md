@@ -13,6 +13,7 @@
         - **Controller** : 클라이언트 측의 요청을 직접적으로 전달 받는 엔드포인트(Endpoint)로써 Model과 View의 중간에서 상호 작용을 해주는 역할
     
     ⇒ 클라이언트 측의 요청을 전달 받아서 비즈니스 로직을 거친 후에 Model 데이터가 만들어지면, 이 Model 데이터를 View로 전달하는 역할을 합니다.
+
 <br />
 
 - Spring MVC 동작 방식
@@ -21,7 +22,8 @@
 
 - Spring MVC 구성 요소
     
-    ![image](https://user-images.githubusercontent.com/107091097/191025216-e4dd2e66-fc5f-4a83-a7fd-946a31e3350f.png)
+    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4af69d48-8a82-4755-b5c6-2eeaee4fae4c/Untitled.png)
+
     
     1. 먼저 클라이언트가 요청을 전송하면 `DispatcherServlet`이라는 클래스에 요청이 전달됩니다.
     2. `DispatcherServlet`은 **클라이언트의 요청을 처리할 Controller에 대한 검색**을 HandlerMapping 인터페이스에게 요청합니다.
