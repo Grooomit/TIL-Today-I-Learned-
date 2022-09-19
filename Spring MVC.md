@@ -16,6 +16,7 @@
 <br />
 <br />
 <br />
+
 - Spring MVC 동작 방식
     - Client가 요청 데이터 전송 → Controller가 요청 데이터 수신 → 비즈니스 로직 처리 → Model 데이터 생성 → Controller에게 Model 데이터 전달 → Controller가 View에게 Model 데이터 전달 → View가 응답 데이터 생성
  
