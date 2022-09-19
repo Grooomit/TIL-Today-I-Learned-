@@ -20,7 +20,7 @@
 
 - Spring MVC 구성 요소
     
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4af69d48-8a82-4755-b5c6-2eeaee4fae4c/Untitled.png)
+    ![image](https://user-images.githubusercontent.com/107091097/191025216-e4dd2e66-fc5f-4a83-a7fd-946a31e3350f.png)
     
     1. 먼저 클라이언트가 요청을 전송하면 `DispatcherServlet`이라는 클래스에 요청이 전달됩니다.
     2. `DispatcherServlet`은 **클라이언트의 요청을 처리할 Controller에 대한 검색**을 HandlerMapping 인터페이스에게 요청합니다.
