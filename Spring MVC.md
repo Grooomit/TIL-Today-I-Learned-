@@ -13,14 +13,17 @@
         - **Controller** : 클라이언트 측의 요청을 직접적으로 전달 받는 엔드포인트(Endpoint)로써 Model과 View의 중간에서 상호 작용을 해주는 역할
     
     ⇒ 클라이언트 측의 요청을 전달 받아서 비즈니스 로직을 거친 후에 Model 데이터가 만들어지면, 이 Model 데이터를 View로 전달하는 역할을 합니다.
-    
+
+<br />
 
 - Spring MVC 동작 방식
     - Client가 요청 데이터 전송 → Controller가 요청 데이터 수신 → 비즈니스 로직 처리 → Model 데이터 생성 → Controller에게 Model 데이터 전달 → Controller가 View에게 Model 데이터 전달 → View가 응답 데이터 생성
+<br />
 
 - Spring MVC 구성 요소
     
     ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4af69d48-8a82-4755-b5c6-2eeaee4fae4c/Untitled.png)
+
     
     1. 먼저 클라이언트가 요청을 전송하면 `DispatcherServlet`이라는 클래스에 요청이 전달됩니다.
     2. `DispatcherServlet`은 **클라이언트의 요청을 처리할 Controller에 대한 검색**을 HandlerMapping 인터페이스에게 요청합니다.
@@ -31,9 +34,6 @@
         
     4. 요청을 처리할 Controller 클래스를 찾았으니 이제는 **실제로 클라이언트 요청을 처리할 Handler 메서드**를 찾아서 호출해야 합니다. `DispatcherServlet`은 Handler 메서드를 직접 호출하지 않고, HandlerAdpater에게 **Handler 메서드 호출을 위임**합니다.
     5. `HandlerAdapter`는 DispatcherServlet으로부터 전달 받은 Controller 정보를 기반으로 **해당 Controller의 Handler 메서드를 호출**합니다.
-        
-        > 이제 전체 처리 흐름의 반환점을 돌았습니다. 이제부터는 반대로 되돌아 갑니다. ^^
-        > 
     6. `Controller`의 Handler 메서드는 비즈니스 로직 처리 후 리턴 받은 **Model 데이터를 HandlerAdapter에게 전달**합니다.
     7. `HandlerAdapter`는 전달받은 **Model 데이터와 View 정보를 다시 DispatcherServlet에게 전달**합니다.
     8. `DispatcherServlet`은 전달 받은 View 정보를 다시 ViewResolver에게 **전달해서 View 검색을 요청**합니다.
@@ -42,8 +42,8 @@
     11. `View`는 응답 데이터를 생성해서 다시 DispatcherServlet에게 전달합니다.
     12. `DispatcherServlet`은 **View로부터 전달 받은 응답 데이터를 최종적으로 클라이언트에게 전달**합니다.
 
-## Controller
 
+## Controller
 
 ### Controller 구성요소
 
