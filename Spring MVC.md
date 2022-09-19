@@ -1,6 +1,5 @@
 ## Spring MVC 아키텍처
 
----
 
 - Spring MVC 정의
     - **Spring MVC는 클라이언트의 요청을 편리하게 처리해주는 프레임워크이다.**
@@ -45,7 +44,6 @@
 
 ## Controller
 
----
 
 ### Controller 구성요소
 
