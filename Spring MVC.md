@@ -22,7 +22,7 @@
 
 - Spring MVC 구성 요소
     
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4af69d48-8a82-4755-b5c6-2eeaee4fae4c/Untitled.png)
+    ![image](https://user-images.githubusercontent.com/107091097/191027459-84469aca-f48e-4807-a1a2-4fe090bcf8d7.png)
 
     
     1. 먼저 클라이언트가 요청을 전송하면 `DispatcherServlet`이라는 클래스에 요청이 전달됩니다.
