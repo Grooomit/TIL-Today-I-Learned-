@@ -71,7 +71,7 @@
 
 ### Spring Security의 웹 요청 처리 흐름
 
-![Untitled](https://www.notion.so/Spring-Security-1f4b15eb166a4aeab7fb3165bad92dcf#dfbd9fb84471459cb896f0bc1df83a0a)
+![Untitled](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/94ec0d3b-ffd7-4cc0-8106-77912fc3603f/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220929%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220929T131220Z&X-Amz-Expires=86400&X-Amz-Signature=e535d5b11ffda142be0c676068069958a175ee576475d26cd2025b49c35b56fc&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
 
 1. 사용자가 보호된 리소스를 요청
 2. 인증 관리자 역할을 하는 컴포넌트가 사용자의 Credential을 요청
