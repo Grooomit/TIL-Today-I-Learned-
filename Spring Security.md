@@ -71,7 +71,7 @@
 
 ### Spring Security의 웹 요청 처리 흐름
 
-![Untitled](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/94ec0d3b-ffd7-4cc0-8106-77912fc3603f/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220929%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220929T131220Z&X-Amz-Expires=86400&X-Amz-Signature=e535d5b11ffda142be0c676068069958a175ee576475d26cd2025b49c35b56fc&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
+![Untitled](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/18a771ab-306d-46f9-aca1-c0a432c053cc/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220929%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220929T131313Z&X-Amz-Expires=86400&X-Amz-Signature=c0060383145ed373ce8df90e87ff9dac44f75530ec878070eb75a63bac695d09&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
 
 1. 사용자가 보호된 리소스를 요청
 2. 인증 관리자 역할을 하는 컴포넌트가 사용자의 Credential을 요청
@@ -87,7 +87,7 @@
 
 ### **웹 요청에서의 서블릿 필터와 필터 체인 역할**
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e9d685ee-d796-48de-adbd-baf0a5993574/Untitled.png)
+![Untitled]([https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e9d685ee-d796-48de-adbd-baf0a5993574/Untitled.png](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/e9d685ee-d796-48de-adbd-baf0a5993574/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220929%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220929T131328Z&X-Amz-Expires=86400&X-Amz-Signature=f95aa26ca5ee32c8b7e71765672ec988cbade698480d8515b8dd035ba34ffc7b&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
 
 - 컴포넌트가 중간에서 웹 요청을 가로채 사용자의 Credential과 접근권한을 검증하는 동작을 한다.
 
@@ -107,7 +107,7 @@
 
 ### **Spring Security에서의 필터 역할**
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/912d6e7e-69c8-460c-a725-ec936233b9a7/Untitled.png)
+![Untitled]([https://s3-us-west-2.amazonaws.com/secure.notion-static.com/912d6e7e-69c8-460c-a725-ec936233b9a7/Untitled.png](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/912d6e7e-69c8-460c-a725-ec936233b9a7/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220929%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220929T131348Z&X-Amz-Expires=86400&X-Amz-Signature=c8676a974697bc297cb27389220839839a22ef3186ff4dd95b114baefbad42b5&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject))
 
 - `DelegatingFilterProxy` 와 `FilterChainProxy` 클래스는 Filter 인터페이스를 구현하기 때문에 엄연히 서블릿 필터로써의 역할을 한다.
 - **`DelegatingFilterProxy`**
@@ -117,7 +117,7 @@
 
 - **Filter와 FilterChain**
     
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d6f9b735-b7ca-4464-a814-091e214d6e40/Untitled.png)
+    ![Untitled]([https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d6f9b735-b7ca-4464-a814-091e214d6e40/Untitled.png](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/d6f9b735-b7ca-4464-a814-091e214d6e40/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220929%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220929T131402Z&X-Amz-Expires=86400&X-Amz-Signature=75e2712fc226b084a8377fbd0047790665d16efa820c8b91e29406671f67426c&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
     
     - Servlet FilterChain은 요청 URI path를 기반으로 HttpServletRequest를 처리한다. 따라서 서버가 요청을 받으면 **서블릿 컨테이너는 요청 URI의 경로를 기반으로 어떤 Filter와 Servlet을 매핑할지 결정**
     - Filter는 FilterChain 안에서 순서를 지정
@@ -134,7 +134,7 @@
 
 ### Spring Security의 인증 처리 흐름 및 컴포넌트
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c12ea90e-9408-4662-8400-9997d9b19366/Untitled.png)
+![Untitled]([https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c12ea90e-9408-4662-8400-9997d9b19366/Untitled.png](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/c12ea90e-9408-4662-8400-9997d9b19366/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220929%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220929T131504Z&X-Amz-Expires=86400&X-Amz-Signature=a280b02fb11d7418f999ba3ceca4968f340bca833d699828c7a437e70773b2b9&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject))
 
 - `**UsernamePasswordAuthenticationFilter**`
     - **사용자의 로그인 요청을 처리**하는 Spring Security Filter 다.
@@ -161,7 +161,7 @@
 
 ### Spring Security 컴포넌트로 보는 권한 부여 처리 흐름
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/94ec0d3b-ffd7-4cc0-8106-77912fc3603f/Untitled.png)
+![Untitled]([https://s3-us-west-2.amazonaws.com/secure.notion-static.com/94ec0d3b-ffd7-4cc0-8106-77912fc3603f/Untitled.png](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/94ec0d3b-ffd7-4cc0-8106-77912fc3603f/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220929%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220929T131517Z&X-Amz-Expires=86400&X-Amz-Signature=457af5261dcdf11e5cb0492315f4587aae5f4f731bd9fb00fc49e184bc734893&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject))
 
 - `**AuthorizationFilter**`
     - Spring Security **Filter Chain에서 URL을 통해 사용자의 액세스를 제한하는 권한 부여 Filter**
