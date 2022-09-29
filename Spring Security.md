@@ -71,7 +71,7 @@
 
 ### Spring Security의 웹 요청 처리 흐름
 
-![Untitled](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/18a771ab-306d-46f9-aca1-c0a432c053cc/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220929%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220929T131313Z&X-Amz-Expires=86400&X-Amz-Signature=c0060383145ed373ce8df90e87ff9dac44f75530ec878070eb75a63bac695d09&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
+![Untitled](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/18a771ab-306d-46f9-aca1-c0a432c053cc/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220929%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220929T131742Z&X-Amz-Expires=86400&X-Amz-Signature=545b2e96a33197457cb9d592ceb66c41d8321765e7e4923c081620bf07c6ca12&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
 
 1. 사용자가 보호된 리소스를 요청
 2. 인증 관리자 역할을 하는 컴포넌트가 사용자의 Credential을 요청
@@ -87,7 +87,7 @@
 
 ### **웹 요청에서의 서블릿 필터와 필터 체인 역할**
 
-![Untitled]([https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e9d685ee-d796-48de-adbd-baf0a5993574/Untitled.png](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/e9d685ee-d796-48de-adbd-baf0a5993574/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220929%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220929T131328Z&X-Amz-Expires=86400&X-Amz-Signature=f95aa26ca5ee32c8b7e71765672ec988cbade698480d8515b8dd035ba34ffc7b&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
+![Untitled](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/e9d685ee-d796-48de-adbd-baf0a5993574/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220929%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220929T131727Z&X-Amz-Expires=86400&X-Amz-Signature=a9a82aadb8e2f45ecdca3d40b0361038ea3e05a9478e0c0493652559ee1b8d14&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
 
 - 컴포넌트가 중간에서 웹 요청을 가로채 사용자의 Credential과 접근권한을 검증하는 동작을 한다.
 
@@ -107,17 +107,17 @@
 
 ### **Spring Security에서의 필터 역할**
 
-![Untitled]([https://s3-us-west-2.amazonaws.com/secure.notion-static.com/912d6e7e-69c8-460c-a725-ec936233b9a7/Untitled.png](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/912d6e7e-69c8-460c-a725-ec936233b9a7/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220929%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220929T131348Z&X-Amz-Expires=86400&X-Amz-Signature=c8676a974697bc297cb27389220839839a22ef3186ff4dd95b114baefbad42b5&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject))
+![Untitled](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/912d6e7e-69c8-460c-a725-ec936233b9a7/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220929%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220929T131706Z&X-Amz-Expires=86400&X-Amz-Signature=f2c436b7a1565716e92f860dbfbe907be6379ab7c01844cfba23938a2186a9aa&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
 
 - `DelegatingFilterProxy` 와 `FilterChainProxy` 클래스는 Filter 인터페이스를 구현하기 때문에 엄연히 서블릿 필터로써의 역할을 한다.
 - **`DelegatingFilterProxy`**
     - 서블릿 컨테이너 영역의 필터와 `ApplicationContext`에 Bean으로 등록된 **필터들을 연결해주는 브릿지 역할**
 - **`FilterChainProxy`**
-    - Spring Security의 **Filter Chain**은 Spring Security에서 **보안을 위한 작업을 처리하는 필터의 모음**이며**,** Spring Security의 **Filter를 사용하기 위한 진입점**이 바로 `FilterChainProxy` 다.
+    - Spring Security의 **Filter Chain**은 Spring Security에서 **보안을 위한 작업을 처리하는 필터의 모음**이며, Spring Security의 **Filter를 사용하기 위한 진입점**이 바로 `FilterChainProxy` 다.
 
 - **Filter와 FilterChain**
     
-    ![Untitled]([https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d6f9b735-b7ca-4464-a814-091e214d6e40/Untitled.png](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/d6f9b735-b7ca-4464-a814-091e214d6e40/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220929%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220929T131402Z&X-Amz-Expires=86400&X-Amz-Signature=75e2712fc226b084a8377fbd0047790665d16efa820c8b91e29406671f67426c&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
+    ![Untitled](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/d6f9b735-b7ca-4464-a814-091e214d6e40/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220929%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220929T131654Z&X-Amz-Expires=86400&X-Amz-Signature=8abe63eef714437aa245b626b7404997ccd977e83d122cf2a835c3b3dba298c1&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
     
     - Servlet FilterChain은 요청 URI path를 기반으로 HttpServletRequest를 처리한다. 따라서 서버가 요청을 받으면 **서블릿 컨테이너는 요청 URI의 경로를 기반으로 어떤 Filter와 Servlet을 매핑할지 결정**
     - Filter는 FilterChain 안에서 순서를 지정
@@ -125,8 +125,8 @@
         - Filter에 `@Order` 애너테이션을 추가하거나 `Orderd` 인터페이스 구현
         - `FilterRegistrationBean` 을 이용해 Filter의 순서 지정
 
-- `**DelegatingPasswordEncoder**`
-    - Spring Security에서 지원하는 `**PasswordEncoder` 구현 객체를 생성해주는 컴포넌트**로써, 사용할 `PasswordEncoder`를 결정하고, 패스워드를 **단방향으로 암호화**해준다.
+- `DelegatingPasswordEncoder`
+    - Spring Security에서 지원하는 **`PasswordEncoder` 구현 객체를 생성해주는 컴포넌트**로써, 사용할 `PasswordEncoder`를 결정하고, 패스워드를 **단방향으로 암호화**해준다.
     - 사용하고자 하는 암호화 알고리즘을 지정하지 않으면 Spring Security에서 권장하는 최신 암호화 알고리즘을 사용하여 패스워드를 암호화 할 수 있다.
     - 언제든지 암호화 방식을 변경할 수 있다. ⇒ 기존 암호화된 패스워드에 대한 마이그레이션 작업이 진행되어야함.
 
@@ -134,24 +134,24 @@
 
 ### Spring Security의 인증 처리 흐름 및 컴포넌트
 
-![Untitled]([https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c12ea90e-9408-4662-8400-9997d9b19366/Untitled.png](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/c12ea90e-9408-4662-8400-9997d9b19366/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220929%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220929T131504Z&X-Amz-Expires=86400&X-Amz-Signature=a280b02fb11d7418f999ba3ceca4968f340bca833d699828c7a437e70773b2b9&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject))
+![Untitled](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/c12ea90e-9408-4662-8400-9997d9b19366/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220929%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220929T131640Z&X-Amz-Expires=86400&X-Amz-Signature=6318ac4dec302a793d110fbf83626940cb3ed6639af74017f7be0fc4fb18ae31&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
 
-- `**UsernamePasswordAuthenticationFilter**`
+- `UsernamePasswordAuthenticationFilter`
     - **사용자의 로그인 요청을 처리**하는 Spring Security Filter 다.
-- `**UsernamePasswordAuthenticationToken**`
+- `UsernamePasswordAuthenticationToken`
     - `Authentication` 인터페이스를 구현한 클래스이며, `Authentication`은 **아직 인증이 되지않은 `Authentication` 을 의미**한다.
-- `**AuthenticationManager**`
+- `AuthenticationManager`
     - **인증 처리를 총괄하는 매니저** 역할을 하는 인터페이스
     - `ProviderManager` 는 `AuthenticationManager`를 구현한 구현클래스다.
-- `**UserDetails**`
+- `UserDetails`
     - 사용자의 자격을 증명해주는 **Credential 를 포함하고 있는 컴포넌트**다.
     - `UserDetails`를 제공하는 컴포넌트가 바로 `UserDetailsService` 이다.
-- `**UserDetailsService**`
+- `UserDetailsService`
     - 데이터베이스 등의 저장소에서 사용자의 **Credential을 조회**하여 `AuthenticationProvider` 에게 제공한다.
-- `**AuthenticationProvider**`
+- `AuthenticationProvider`
     - `UsernamePasswordAuthenticationFilter` 가 생성하는 **Authentication은 인증을 위해 필요한 사용자의 로그인 정보**를 가지고 있지만, `AuthenticationProvider` 가 생성한 **Authentication은 인증에 성공한 사용자의 정보**(Principal, Credential, GrantedAuthorities)를 가지고 있다.
     - 인증된 Authentication을 `ProviderManager` 에게 전달하고, `ProviderManager`는 다시 `UsernamePasswordAuthenticationFilter`에게 전달한다.
-- `**SecurityContextHolder**`
+- `SecurityContextHolder`
     - 인증된 Authentication을 전달 받은 `UsernamePasswordAuthenticationFilter`는 `SecurityContextHolder`를 이용해 `SecurityContext`에 인증된 Authentication을 저장한다.
     - `SecurityContext`는 다시 HttpSession에 저장되어 **사용자의 인증 상태를 유지**한다.
 
@@ -161,19 +161,19 @@
 
 ### Spring Security 컴포넌트로 보는 권한 부여 처리 흐름
 
-![Untitled]([https://s3-us-west-2.amazonaws.com/secure.notion-static.com/94ec0d3b-ffd7-4cc0-8106-77912fc3603f/Untitled.png](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/94ec0d3b-ffd7-4cc0-8106-77912fc3603f/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220929%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220929T131517Z&X-Amz-Expires=86400&X-Amz-Signature=457af5261dcdf11e5cb0492315f4587aae5f4f731bd9fb00fc49e184bc734893&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject))
+![Untitled](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/94ec0d3b-ffd7-4cc0-8106-77912fc3603f/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220929%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220929T131517Z&X-Amz-Expires=86400&X-Amz-Signature=457af5261dcdf11e5cb0492315f4587aae5f4f731bd9fb00fc49e184bc734893&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
 
-- `**AuthorizationFilter**`
+- `AuthorizationFilter`
     - Spring Security **Filter Chain에서 URL을 통해 사용자의 액세스를 제한하는 권한 부여 Filter**
     - `SecurityContextHolder`로부터 Authentication을 획득
     - 획득한 Authentication과 HttpServletRequest를 `AuthorizationManager` 에게 전달
-- `**AuthorizationManager**`
+- `AuthorizationManager`
     - **권한 부여 처리를 총괄**하는 매니저 역할을 하는 인터페이스
     - `RequestMatcherDelegatingAuthorizationManager` 는 AuthorizationManager를 구현하는 구현체 중 하나다.
-- `**RequestMatcherDelegatingAuthorizationManager**`
-    - RequestMatcher 평가식을 기반으로 해당 평가식에 매치되는 `**AuthorizationManager`에게 권한 부여 처리를 위임**하는 역할
+- `RequestMatcherDelegatingAuthorizationManager`
+    - RequestMatcher 평가식을 기반으로 해당 평가식에 매치되는 **`AuthorizationManager`에게 권한 부여 처리를 위임**하는 역할
     - 직접 권한 부여 처리를 하는 것이 아니라 `RequestMatcher`를 통해 매치되는 `AuthorizationManager` 구현 클래스에게 위임만 한다.
     - 내부에서 매치되는 AuthorizationManager 구현 클래스가 있다면 해당 **AuthorizationManager 구현 클래스가 사용자의 권한을 체크**
-    - 적절한 권한이 아니라면 AccessDeniedException이 throw되고 `**ExceptionTranslationFilter`가 AccesDeniedException을 처리**한다.
+    - 적절한 권한이 아니라면 AccessDeniedException이 throw되고 **`ExceptionTranslationFilter`가 AccesDeniedException을 처리**한다.
 - `RequestMatcher`
     - RequestMatcher는 SecurityConfiguration에서 `.antMatchers("/orders/**").hasRole("ADMIN")`와 같은 메서드 체인 정보를 기반으로 생성된다.
