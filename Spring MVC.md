@@ -557,3 +557,5 @@
 [DTO(Date Transfer Object)](https://www.notion.so/DTO-Date-Transfer-Object-a71d3264612b427d885eb9baabe0a7e9)
 
 [[SpringMVC] Spring MVC Framework란 - Heee's Development Blog](https://gmlwjd9405.github.io/2018/12/20/spring-mvc-framework.html)
+
+[ResponseEntity 알아보기](https://itvillage.tistory.com/44)
