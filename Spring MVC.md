@@ -247,23 +247,23 @@
 ### Rest Client
 
 - Rest API 서버에 HTTP 요청을 보낼 수 있는 클라이언트 툴 또는 라이브러리
-    - Postman은 UI가 갖춰진 Rest Client이다.
+  - Postman은 UI가 갖춰진 Rest Client이다.
+
 - **RestTemplate**
-    - 원격지에 있는 다른 Backend 서버에 HTTP 요청을 전송할 수 있는 **Rest Client API**
-    - RestTemplate을 사용할 수 있는 기능 예
-        - 결제 서비스
-        - 카카오톡 등의 메시징 서비스
-        - Google Map 등의 지도 서비스
-        - 공공 데이터 포털, 카카오, 네이버 등에서 제공하는 Open API
-        - 기타 원격지 API 서버와의 통신
-    - RestTemplate 사용 단계
-        - RestTemplate 객체 생성
-            - `RestTemplate` 의 생성자 파라미터로 HTTP Client 라이브러리의 구현 객체를 전달해야함
-                
-                → Apache HttpComponents를 사용하기 위해서는 build.gradle의 dependencies 항목에 `implementation` `'org.apache.httpcomponents:httpclient'` 의존 라이브러리를 추가해야합니다.
-                
-            
-            ```java
+  - 원격지에 있는 다른 Backend 서버에 HTTP 요청을 전송할 수 있는 **Rest Client API**
+  - RestTemplate을 사용할 수 있는 기능 예
+    - 결제 서비스
+    - 카카오톡 등의 메시징 서비스
+    - Google Map 등의 지도 서비스
+    - 공공 데이터 포털, 카카오, 네이버 등에서 제공하는 Open API
+    - 기타 원격지 API 서버와의 통신
+  
+  - RestTemplate 사용 단계
+    - RestTemplate 객체 생성
+      - `RestTemplate` 의 생성자 파라미터로 HTTP Client 라이브러리의 구현 객체를 전달해야함
+      - → Apache HttpComponents를 사용하기 위해서는 build.gradle의 dependencies 항목에 `implementation` `'org.apache.httpcomponents:httpclient'` 의존 라이브러리를 추가해야합니다.
+      
+           ```java
             **// HttpComponentsClientHttpRequestFactory 클래스를 통해 Apache HttpComponents를 전달**
             public class RestClientExample01 {
                 public static void main(String[] args) {
@@ -272,32 +272,31 @@
                             new RestTemplate(new HttpComponentsClientHttpRequestFactory());
                 }
             }
-            ```
+           ```
             
-        - HTTP 요청을 전송할 엔드포인트의 URI 객체를 생성한다.
-            - `RestTemplate` 객체를 생성했다면 HTTP Request를 전송할 Rest 엔드포인트의 URI를 지정
+     - HTTP 요청을 전송할 엔드포인트의 URI 객체를 생성한다.
+       - `RestTemplate` 객체를 생성했다면 HTTP Request를 전송할 Rest 엔드포인트의 URI를 지정
             
-            ```java
+           ```java
             public class RestClientExample01 {
                 public static void main(String[] args) {
                     // (1) 객체 생성
-                    RestTemplate restTemplate =
-                            new RestTemplate(new HttpComponentsClientHttpRequestFactory());
+                    RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
             
-            				// (2) URI 생성
-            				UriComponents uriComponents =
-            								UriComponentsBuilder
-            													.newInstance()   // UriComponentsBuilder 객체 생성
-            													.scheme("http")  // URI의 scheme을 설정
-            													.host("worldtimeapi.org")  // 호스트 정보를 입력
-            														.port(80)  // 포트번호 지정 (default : 80)
-            													.path("/api/timezone/{continents}/{city}")  // URI의 경로 입력
-            													.encode()  // URI에 사용된 템플릿 변수 인코딩
-            													.build();  // UriComponents 객체 생성
-            				URI uri = uriComponents.expand("Asia", "Seoul").toUri();  // expand : URI 템플릿 변수값 대체, toUri : URI 객체 생성
-            		}
+                    // (2) URI 생성
+            		UriComponents uriComponents = UriComponentsBuilder
+         										.newInstance()   // UriComponentsBuilder 객체 생성
+            									.scheme("http")  // URI의 scheme을 설정
+            									.host("worldtimeapi.org")  // 호스트 정보를 입력
+            									.port(80)  // 포트번호 지정 (default : 80)
+            									.path("/api/timezone/{continents}/{city}")  // URI의 경로 입력
+            									.encode()  // URI에 사용된 템플릿 변수 인코딩
+            									.build();  // UriComponents 객체 생성
+                                                        
+            		URI uri = uriComponents.expand("Asia", "Seoul").toUri();  // expand : URI 템플릿 변수값 대체, toUri : URI 객체 생성
+            	}
             }
-            ```
+           ```
             
         - `getForObject()`, `getForEntity()`, `exchange()` 등을 이용해서 HTTP 요청을 전송한다.
             
@@ -305,39 +304,37 @@
             public class RestClientExample01 {
                 public static void main(String[] args) {
                     // (1) 객체 생성
-                    RestTemplate restTemplate =
-                            new RestTemplate(new HttpComponentsClientHttpRequestFactory());
+                    RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
             
                     // (2) URI 생성
-                    UriComponents uriComponents =
-                            UriComponentsBuilder
+                    UriComponents uriComponents = UriComponentsBuilder
                                     .newInstance()
                                     .scheme("http")
                                     .host("worldtimeapi.org")
-            //                        .port(80)
+                                    .port(80)
                                     .path("/api/timezone/{continents}/{city}")
                                     .encode()
                                     .build();
-                    URI uri = uriComponents.expand("Asia", "Seoul").toUri();
+                    URI uri = uriComponents.expand("Asia", "Seoul").toUri();  
             
-            				// (3) Request 전송
-            				String result = restTemplate.**getForObject**(uri, **String.class**);
-            				// getForObject() 메서드는 HTTP Get 요청을 통해 서버의 리소스를 조회
-            				// URI uri : Request를 전송할 엔드포인트의 URI 객체 지정
-            				// Class<T> responseType : 응답으로 전달 받을 클래스의 타입 지정
+            		// (3) Request 전송
+            		String result = restTemplate.getForObject(uri, String.class);
+            		    // getForObject() 메서드는 HTTP Get 요청을 통해 서버의 리소스를 조회
+            		    // URI uri : Request를 전송할 엔드포인트의 URI 객체 지정
+            		    // Class<T> responseType : 응답으로 전달 받을 클래스의 타입 지정
             				
-            				System.out.println(result);
-            		}
+            		System.out.println(result);
+            	}
             }
             ```
             
-            - `getForObject()` 를 이용한 **커스텀 클래스 타입으로** 원하는 정보만 요청 받기
+         - `getForObject()` 를 이용한 **커스텀 클래스 타입으로** 원하는 정보만 요청 받기
                 
-                <aside>
-                ⚠️ 전달 받고자하는 응답 데이터의 JSON 프로퍼티 이름과 클래스의 멤버변수이름이 동일해야 한다. getter 메서드 역시 동일한 이름이어야 한다.
-                </aside>
+              <aside>
+              ⚠️ 전달 받고자하는 응답 데이터의 JSON 프로퍼티 이름과 클래스의 멤버변수이름이 동일해야 한다. getter 메서드 역시 동일한 이름이어야 한다.
+              </aside>
                 
-                ```java
+               ```java
                 // (3) Request 전송. WorldTime 클래스로 응답 데이터를 전달 받는다.
                 WorldTime worldTime = restTemplate.getForObject(uri, WorldTime.class);
                 
@@ -363,7 +360,7 @@
                         return day_of_week;
                     }
                 }
-                ```
+               ```
                 
             - `getForEntity()` 를 사용한 Response Body(바디, 컨텐츠) + Header(헤더) 정보 전달 받기
                 
