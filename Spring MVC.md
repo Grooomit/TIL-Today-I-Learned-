@@ -47,31 +47,31 @@
 
 ### Controller 구성요소
 
-- 1. 패키지 구조 생성
+- 패키지 구조 생성
     - **기능 기반 패키지 구조** : 애플리케이션에서 구현해야 하는 기능을 기준으로 패키지를 구성. **테스트와 리팩토링 용이**
         
         → 하나의 기능을 완성하기 위한 계층별(API 계층, 서비스 계층, 데이터 액세스 계층)클래스들이 모여있습니다.
         
     - **계층 기반 패키지 구조** : 패키지를 하나의 계층(Layer)으로 보고 클래스들을 계층별로 묶어서 관리하는 구조
 
-- 2. 애플리케이션의 Controller 설계
+- 애플리케이션의 Controller 설계
     - **애플리케이션의 기능 요구 사항**
     - **애플리케이션에 필요한 리소스** : REST API 기반의 애플리케이션에서 일반적으로 제공해야 될 기능을 리소스로 분류
 
-- 3. 엔트리포인트 클래스 작성
+- 엔트리포인트 클래스 작성
     - **`@SpringBootApplication` :**
         - 자동 구성을 활성화합니다.
         - 애플리케이션 패키지 내에서 `@Component`가 붙은 클래스를 검색한 후(scan), **Spring Bean**으로 등록하는 기능을 활성화합니다.
         - `@Configuration` 이 붙은 클래스를 자동으로 찾아주고, 추가적으로 Spring Bean을 등록하는 기능을 활성화합니다.
     - **`SpringApplication.run(Section3Week1Application.class, args);` :** Spring 애플리케이션을 부트스트랩하고, 실행하는 역할을 합니다.
 
-- 4. 애플리케이션의 Controller 구조 작성
+- 애플리케이션의 Controller 구조 작성
     - `@RestController`
         - Spring MVC에서는 특정 클래스에 `@RestController` 를 추가하면 해당 클래스가 REST API의 리소스(자원, Resource)를 처리하기 위한 API 엔드포인트로 동작함을 정의합니다.
         - 또한 `@RestController` 가 추가된 클래스는 애플리케이션 로딩 시, Spring Bean으로 등록해줍니다.
     - `@RequestMapping` 은 클라이언트의 요청과 클라이언트 요청을 처리하는 **핸들러 메서드(Handler Method)를 매핑**해주는 역할을 합니다.
 
-- 5. 핸들러 메서드 작성
+- 핸들러 메서드 작성
     - **요청 핸들러 메서드(Request Handler Method) :** 클라이언트의 요청을 전달 받아서 처리
     - `@PostMapping` 은 클라이언트의 요청 데이터(request body)를 서버에 생성할 때 사용하는 애너테이션
         - **HttpStatus.CREATED** : 클라이언트의 POST 요청을 처리해서 요청 데이터(리소스)가 정상적으로 생성되었음을 의미하는 HTTP 응답 상태
@@ -118,18 +118,18 @@
     - `@RequestHeader`로 개별 헤더 정보 받기
         
         ```java
-        **// @RequestHeader를 사용해서 특정 헤더 정보만 읽는 예제**
+        // @RequestHeader를 사용해서 특정 헤더 정보만 읽는 예제
         @RestController
         @RequestMapping(path = "/v1/coffees")
         public class CoffeeController {
         	@PostMapping
         	public ResponseEntity postCoffee(**@RequestHeader**("user-agent") String userAgent,
-        																	@RequestParam("korName") String korName,
-        																	@RequestParam("engName") String engName,
-        																	@RequestParam("price") int price) {
-        			System.out.println("user-agent: " + userAgent);
+                                             @RequestParam("korName") String korName,
+                                             @RequestParam("engName") String engName,
+                                             @RequestParam("price") int price) {
+        		System.out.println("user-agent: " + userAgent);
         
-        			return new ResponseEntity<>(new Coffee(korName, engName, price), HttpStatus.CREATED);
+        	    return new ResponseEntity<>(new Coffee(korName, engName, price), HttpStatus.CREATED);
         	}
         }
         ```
@@ -137,21 +137,22 @@
     - `@RequestHeader`로 전체 헤더 정보 받기
         
         ```java
-        **// @RequestHeader를 사용해서 Request의 모든 헤더 정보를 Map으로 전달 받는 예제**
+        // @RequestHeader를 사용해서 Request의 모든 헤더 정보를 Map으로 전달 받는 예제
         @RestController
         @RequestMapping(path = "/v1/members")
         public class MemberController {
         		@PostMapping
-        		public ResponseEntity postMember(**@RequestHeader** Map<String, String> headers,
-        																		@RequestParam("email") String email,
-        																		@RequestParam("name") String name,
-        																		@RequestParam("phone") String phone) {
-        				for (Map.Entry<String, String> entry : headers.entrySet()) {
-        						System.out.println("key : " + entry.getKey() + ", value : " + entry.getValue());
-        				}
+        		public ResponseEntity postMember(**@RequestHeader** Map<String, String> headers, 
+                                                @RequestParam("email") String email, 
+                                                @RequestParam("name") String name, 
+                                                @RequestParam("phone") String phone) {
+                                                
+        			for (Map.Entry<String, String> entry : headers.entrySet()) {
+        					System.out.println("key : " + entry.getKey() + ", value : " + entry.getValue());
+        			}
         		
-        				return new ResponseEntity<>(new Member(email, name, phone), HttpStatus.CREATED);
-        	}
+        			return new ResponseEntity<>(new Member(email, name, phone), HttpStatus.CREATED);
+        	    }
         }
         ```
         
@@ -159,17 +160,18 @@
         - 단순히 특정 헤더 정보에 접근하고자 한다면  `HttpServletRequest`대신에 `@RequestHeader` 를 이용하는 편이 낫다.
         
         ```java
-        **// HttpServletRequest 객체를 통해서 Request 헤더 정보 얻기**
+        // HttpServletRequest 객체를 통해서 Request 헤더 정보 얻기
         @RestController
         @RequestMapping(path = "/v1/orders")
         public class OrderController {
             @PostMapping
             public ResponseEntity postOrder(HttpServletRequest httpServletRequest,
-        																		@RequestParam("memberId") long memberId,
-        																		@RequestParam("coffeeId") long coffeeId) {
-        				System.out.println("user-agent: " + httpServletRequest.getHeader("user-agent"));
+        									@RequestParam("memberId") long memberId,
+        									@RequestParam("coffeeId") long coffeeId) {
+                                            
+        			System.out.println("user-agent: " + httpServletRequest.getHeader("user-agent"));
         
-        				return new ResponseEntity<>(new Order(memberId, coffeeId), HttpStatus.CREATED);
+        			return new ResponseEntity<>(new Order(memberId, coffeeId), HttpStatus.CREATED);
         		}
         }
         ```
@@ -177,7 +179,7 @@
     - `HttpEntity` 객체로 헤더 정보 얻기
         
         ```java
-        **// HttpEntity 객체를 통해서 Request 헤더 정보를 읽어오는 예제**
+        // HttpEntity 객체를 통해서 Request 헤더 정보를 읽어오는 예제
         @RestController
         @RequestMapping(path = "/v1/coffees")
         public class CoffeeController{
@@ -191,14 +193,14 @@
                         HttpStatus.CREATED);
             }
         
-        		@GetMapping
-        		public ResponseEntity getCoffees(HttpEntity httpEntity) {
-        				for(Map.Entry<String, List<String>> entry : httpEntity.getHeaders().entrySet()) {
-        						System.out.println("key: " + entry.getKey() + ", value: " + entry.getValue());
-        				}
+        	@GetMapping
+        	public ResponseEntity getCoffees(HttpEntity httpEntity) {
+        			for(Map.Entry<String, List<String>> entry : httpEntity.getHeaders().entrySet()) {
+        					System.out.println("key: " + entry.getKey() + ", value: " + entry.getValue());
+        			}
         
-        				System.out.println("host: " + httpEntity.getHeaders().getHost());
-        				return null;
+        			System.out.println("host: " + httpEntity.getHeaders().getHost());
+        			return null;
         		}
         }
         ```
@@ -218,7 +220,7 @@
                                              @RequestParam("name") String name,
                                              @RequestParam("phone") String phone) {
         				HttpHeaders headers = new HttpHeaders();
-        				headers.**set**("Client-Geo-Location", "Korea,Seoul");
+        				headers.set("Client-Geo-Location", "Korea,Seoul");
         
         				return new ResponseEntity<>(new Member(email, name, phone), headers, HttpStatus.CREATED);
         		}
@@ -332,8 +334,7 @@
             - `getForObject()` 를 이용한 **커스텀 클래스 타입으로** 원하는 정보만 요청 받기
                 
                 <aside>
-                ⚠️ 전달 받고자하는 **응답 데이터의 JSON 프로퍼티 이름과 클래스의 멤버변수이름이 동일**해야 한다. getter 메서드 역시 동일한 이름이어야 한다.
-                
+                ⚠️ 전달 받고자하는 응답 데이터의 JSON 프로퍼티 이름과 클래스의 멤버변수이름이 동일해야 한다. getter 메서드 역시 동일한 이름이어야 한다.
                 </aside>
                 
                 ```java
@@ -382,7 +383,7 @@
                 
             
 
-## [DTO(Data Transfer Object)](https://www.notion.so/DTO-Date-Transfer-Object-a71d3264612b427d885eb9baabe0a7e9)
+## DTO(Data Transfer Object)
 
 ---
 
