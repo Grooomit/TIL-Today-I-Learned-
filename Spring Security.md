@@ -5,7 +5,6 @@
 ### Spring Security란
 
 > Spring MVC 기반 애플리케이션의 인증(Authentication)과 인가 기능을 지원하는 보안 프레임워크로써, Spring MVC 기반 애플리케이션에 보안을 적용하기위한 사실상의 표준이다.
-> 
 
 - **보안 기능**
     - 다양한 유형의 사용자 인증 기능 적용(폼, 토큰, OAuth 2, LDAP 인증)
@@ -17,15 +16,18 @@
 
 - **용어 정리**
     - **Principal(주체)**
-        - 앱에서 작업을 수행할 수 있는 사용자, 디바이스 또는 시스템. 일반적으로  인증 프로세스가 성공적으로 수행된 사용자의 계정 정보를 의미
+      - 앱에서 작업을 수행할 수 있는 사용자, 디바이스 또는 시스템. 일반적으로  인증 프로세스가 성공적으로 수행된 사용자의 계정 정보를 의미
+     
     - **Authentication(인증)**
         - 애플리케이션을 사용하는 사용자가 본인이 맞음을 증명하는 절차
         - 사용자를 식별하기 위한 정보를 **Credential** 이라고 한다.
+      
     - **Authorization(인가, 권한부여)**
         - Authentication이 정상적으로 수행된 사용자에게 하나 이상의 권한을 부여하여 특정 리소스에 접근할 수 있게 허가하는 과정
+      
     - **Access Control(접근 제어)**
         - 사용자가 애플리케이션의 리소스에 접근하는 행위를 제어
-    
+       
 
 ### Spring Security의 기본 구조
 
@@ -67,6 +69,7 @@
     - **Custom `AuthenticationProvider`를 사용하는 방법**
         - `AuthenticationProvider`는 Spring Security에서 클라이언트로부터 전달받은 인증 정보를 바탕으로 인증된 사용자인지에 대한 인증 처리를 수행하는 Spring Security 컴포넌트다.
 
+
 ## Spring Security 웹 요청 처리 흐름과 필터
 
 ### Spring Security의 웹 요청 처리 흐름
@@ -75,7 +78,7 @@
 
 1. 사용자가 보호된 리소스를 요청
 2. 인증 관리자 역할을 하는 컴포넌트가 사용자의 Credential을 요청
-    1. 사용자의 Credential : 해당 사용자를 증명하기 위한 구체적인 수단(Password 등)
+   - 사용자의 Credential : 해당 사용자를 증명하기 위한 구체적인 수단(Password 등)
 3. 사용자는 인증 관리자에게 Credential을 제공
 4. 인증 관리자는 Credential 저장소에서 사용자의 Credential을 조회
 5. 인증 관리자는 사용자가 제공한 Credential과 Credential 저장소에서 조회한 정보를 비교해 검증 작업 수행
@@ -91,27 +94,26 @@
 
 - 컴포넌트가 중간에서 웹 요청을 가로채 사용자의 Credential과 접근권한을 검증하는 동작을 한다.
 
-<aside>
 💡 ⇒ 서블릿 기반 애플리케이션의 경우, 애플리케이션의 엔드포인트에 요청이 도달하기 전에 중간에서 요청을 가로챈 후 어떤 처리를 할 수 있는 포인트를 제공하는데 그것이 바로 **서블릿 필터**다
 
-</aside>
 
 - 서블릿 필터는 자바에서 제공하는 API. `javax.servlet.Filter` 인터페이스를 구현한다.
 - 서블릿 필터는 하나 이상의 필터들을 연결해 필터 체인을 구성할 수 있다.
 - 각각의 필터들이 `doFilter()` 라는 메서드를 구현해야하며, 메서드 호출을 통해 필터 체인을 형성
 
-<aside>
 💡 **특별한 작업들을 수행한 뒤, HttpServlet을 거쳐 DispatcherServlet에 요청이 전달**되며, 반대로 DispatcherServlet에서 전달한 **응답에 대해 역시 특별한 작업을 수행할 수 있습니다.**
 
-</aside>
+
 
 ### **Spring Security에서의 필터 역할**
 
 ![Untitled](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/912d6e7e-69c8-460c-a725-ec936233b9a7/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220929%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220929T131706Z&X-Amz-Expires=86400&X-Amz-Signature=f2c436b7a1565716e92f860dbfbe907be6379ab7c01844cfba23938a2186a9aa&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
 
 - `DelegatingFilterProxy` 와 `FilterChainProxy` 클래스는 Filter 인터페이스를 구현하기 때문에 엄연히 서블릿 필터로써의 역할을 한다.
+
 - **`DelegatingFilterProxy`**
     - 서블릿 컨테이너 영역의 필터와 `ApplicationContext`에 Bean으로 등록된 **필터들을 연결해주는 브릿지 역할**
+    
 - **`FilterChainProxy`**
     - Spring Security의 **Filter Chain**은 Spring Security에서 **보안을 위한 작업을 처리하는 필터의 모음**이며, Spring Security의 **Filter를 사용하기 위한 진입점**이 바로 `FilterChainProxy` 다.
 
@@ -120,8 +122,11 @@
     ![Untitled](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/d6f9b735-b7ca-4464-a814-091e214d6e40/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220929%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220929T131654Z&X-Amz-Expires=86400&X-Amz-Signature=8abe63eef714437aa245b626b7404997ccd977e83d122cf2a835c3b3dba298c1&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
     
     - Servlet FilterChain은 요청 URI path를 기반으로 HttpServletRequest를 처리한다. 따라서 서버가 요청을 받으면 **서블릿 컨테이너는 요청 URI의 경로를 기반으로 어떤 Filter와 Servlet을 매핑할지 결정**
+    
     - Filter는 FilterChain 안에서 순서를 지정
+    
     - Filter의 순서는 매우 중요하며, SpringBoot에서 순서를 지정하는 방법은
+    
         - Filter에 `@Order` 애너테이션을 추가하거나 `Orderd` 인터페이스 구현
         - `FilterRegistrationBean` 을 이용해 Filter의 순서 지정
 
