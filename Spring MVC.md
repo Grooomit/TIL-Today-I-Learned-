@@ -526,7 +526,7 @@
                 Class<? extends Payload>[] payload() default {};
             }
             ```
-            
+
         - Custom Annotation 에 바인딩 되는 Custom Validator 구현
             - Custom Validator 를 구현하기 위해서는 `ConstraintValidator` 인터페이스를 구현해야 한다.
             
@@ -557,3 +557,5 @@
 [[SpringMVC] Spring MVC Framework란 - Heee's Development Blog](https://gmlwjd9405.github.io/2018/12/20/spring-mvc-framework.html)
 
 [ResponseEntity 알아보기](https://itvillage.tistory.com/44)
+
+
