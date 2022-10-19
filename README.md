@@ -10,6 +10,7 @@
 
 # Spring Framework
 
+ - [Spring Core](https://github.com/Grooomit/Today-I-Learned/blob/38a6afe86eee16c8f9c6f463c6c0f2927ae8ebfc/Spring%20Core.md)
  - [Spring MVC](https://github.com/Grooomit/Today-I-Learned/blob/main/Spring%20MVC.md)
 
 ## Spring Data
