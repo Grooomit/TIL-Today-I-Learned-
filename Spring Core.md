@@ -18,7 +18,7 @@
 
 - **How is Spring Container created?**
     
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5e381e0a-c6dc-4aba-b374-62001bad1554/Untitled.png)
+    ![Untitled](https://i.imgur.com/PlDF42i.png)
     
     - 스프링 컨테이너는 Configuration Metadata를 사용
     - 스프링 컨테이너는 파라미터로 넘어온 설정 클래스 정보를 사용해서 스피링 빈을 등록
@@ -56,6 +56,7 @@
     - Bean은 BeanDefinition(빈 설정 메타정보)로 정의되고 BeanDefinition에 따라서 활용하는 방법이 달라진다.
     - 속성에 따라 컨테이너가 Bean을 어떻게 생성하고 관리할지 결정한다.
     
+    <br>
     <aside>
     💡 스프링 컨테이너는 설정 형식이 XML인지 Java 코드인지 모르고 BeanDefinition만 알면 된다.
     
@@ -79,10 +80,13 @@
     | session | 웹 세션이 생성되고 종료될 때 까지 유지되는 스코프 |
     | application | 웹의 서블릿 컨텍스와 같은 범위로 유지되는 스코프 |
     | websocket | 단일 bean definition 범위를 WebSocket의 라이프사이클까지 확장. ApplicationContext의 컨텍스트에서만 유효 |
+
+<br>
+
 - **싱글톤 스코프**
     
     > 클래스의 인스턴스가 딱 1개만 생성되는 것을 보장하는 **디자인 패턴**
-    > 
+    
     - 스프링 컨테이너의 시작과 함께 생성되어서 종료될 때까지 유지
     - 하나의 공유 인스턴스만 관리
     - 단일 인스턴스는 싱글톤 빈의 캐시에 저장된다.
@@ -90,8 +94,7 @@
     
     ⇒ static 영역에 객체 인스턴스를 미리 1개 생성하여 getIstance() 메서드를 통해서만 조회할 수 있도록 한다.
     
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/10905094-d648-4bab-9ffd-f91b26b7243d/Untitled.png)
-    
+
 
 ### Java 기반 컨테이너(Container) 설정
 
