@@ -33,6 +33,12 @@
             - [이미지 추출](#%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%B6%94%EC%B6%9C)
             - [이미지 배포](#%EC%9D%B4%EB%AF%B8%EC%A7%80-%EB%B0%B0%ED%8F%AC)
         - [Dockerfile](#dockerfile)
+            - [이미지를 생성하는 방법](#%EC%9D%B4%EB%AF%B8%EC%A7%80%EB%A5%BC-%EC%83%9D%EC%84%B1%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95)
+            - [Dockerfile 작성](#dockerfile-%EC%9E%91%EC%84%B1)
+            - [Dockerfile 빌드](#dockerfile-%EB%B9%8C%EB%93%9C)
+            - [멀티 스테이지를 이용한 Dockerfile 빌드하기](#%EB%A9%80%ED%8B%B0-%EC%8A%A4%ED%85%8C%EC%9D%B4%EC%A7%80%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-dockerfile-%EB%B9%8C%EB%93%9C%ED%95%98%EA%B8%B0)
+            - [기타 Dockerfile 명령어](#%EA%B8%B0%ED%83%80-dockerfile-%EB%AA%85%EB%A0%B9%EC%96%B4)
+            - [Dockerfile로 빌드할 때 주의할 점](#dockerfile%EB%A1%9C-%EB%B9%8C%EB%93%9C%ED%95%A0-%EB%95%8C-%EC%A3%BC%EC%9D%98%ED%95%A0-%EC%A0%90)
         - [도커 데몬](#%EB%8F%84%EC%BB%A4-%EB%8D%B0%EB%AA%AC)
     - [도커 스웜](#%EB%8F%84%EC%BB%A4-%EC%8A%A4%EC%9B%9C)
     - [도커 컴포즈](#%EB%8F%84%EC%BB%A4-%EC%BB%B4%ED%8F%AC%EC%A6%88)
@@ -524,16 +530,143 @@ docker import rootFS.tar myimage:0.0
 
 1. 도커 허브 이미지 저장소 사용
 
-- `docker push` 로 이미지 올리기
+- `docker push [저장소 이름]/[이미지 이름]:[태그]` 로 이미지 올리기
+  - 도커 허브로 올리기 위해서는 이미지 명을 규칙에 맞게 변경해야 한다
+    - `docker tag my-image-name:0.0 eatingbug/my-image-name:0.0`
 - `docker pull` 로 이미지 가져오기
 
-2. 도커 사설 레지스트리를 사용
+2. 도커 사설 레지스트리를 사용 (추가공부 필요)
 
 - 사용자가 직접 이미지 저장소 및 서버, 저장공간 등을 관리해야 하므로 도커 허브보다 사용법이 까다롭다.
+
+  ```sh
+  docker run -d --name myregistry \
+  -p 5000:5000 \
+  --restart=always \
+  registry:2.6
+  ```
+
+  - `--restart` : 컨테이너가 종료됐을 때 재시작에 대한 정책설정
+
+  ```sh
+  // 사설 레지스트리에 push
+  docker tag my-image-name:0.0 ${DOCKER_HOST_IP}:5000/my-image-name:0.0
+
+  docker push 192.168.99.101:5000/my-image-name:0.0
+  ```
+
+  - 기본적으로 도커 데몬은 HTTPS 를 사용하지 않는 레지스트리 컨테이너에 접근하지 못하도록 설정
+    - `DOCKER_OPTS="--insecure-registry=192.168.99.101:5000"` 를 통해 HTTPS 를 사용하지 않는 레지스트리 컨테이너에 이미지를 push, pull 할 수 있다.
+
+  > 레지스트리 컨테이너는 생성됨과 동시에 컨테이너 내부 디렉토리에 마운트되는 도커 볼륨을 생성한다. 컨테이너가 삭제돼도 볼륨은 남아있는데, `docker rm --volumes` 옵션을 사용하면 컨테이너를 삭제할 때 볼륨도 같이 삭제된다.
 
 <br>
 
 ### Dockerfile
+
+#### 이미지를 생성하는 방법
+
+> 완성된 이미지를 생성하기 위해 컨테이너에 설치해야 하는 패키지, 추가해야 하는 소스코드, 등을 하나의 파일(=Dockerfile) 에 기록해두면 도커는 이 파일을 읽어 컨테이너에서 작업을 수행한 뒤 이미지로 생성한다.
+
+- 애플리케이션에 필요한 패키지 설치 등을 명확히 할 수 있다.
+- 이미지 생성을 자동화할 수 있으며, 쉽게 배포할 수 있다.
+
+<br>
+
+#### Dockerfile 작성
+
+- docker engine 은 Dockerfile 을 읽어들일 때 기본적으로 현재 디렉토리에 있는 Dockerfile 을 선택한다.
+
+1. `FROM` : 생성할 이미지의 베이스가 될 이미지
+2. `MAINTAINER` : 이미지를 생성한 개발자의 정보
+3. `LABEL` : 이미지에 메타데이터 추가
+4. `RUN` : 이미지를 만들기 위해 컨테이너 내부에서 명령어를 실행
+   - 이미지를 빌드할 때 별도의 입력을 받아야 하는 RUN 이 있다면 build 명령어는 이를 오류로 간주하고 빌드를 종료한다.
+5. `ADD` : 파일을 이미지에 추가
+6. `WORKDIR` : 명령어를 실행할 디렉토리를 나타낸다.
+7. `EXPOSE` : Dockerfile 의 빌드로 생성된 이미지에서 노출할 포트를 설정
+8. `CMD` : 컨테이너가 시작될 때마다 실행할 명령어를 설정하며, Dockerfile에서 한번만 사용가능
+
+<br>
+
+#### Dockerfile 빌드
+
+```sh
+docker build -t mybuild:0.0 ./
+```
+
+- `-t` : 생성될 이미지의 이름을 설정
+  - `-t` 옵션을 사용하지 않으면 16진수 형태의 이름으로 이미지가 저장된다.
+- `./` : build 명령어 끝에는 Dockerfile 이 저장된 경로를 입력
+
+```sh
+docker run -d -P --name myserver mybuild:0.0
+docker port myserver // 또는 docker ps 사용
+```
+
+- `-P` : 이미지에 설정된 EXPOSE 의 모든 포트를 호스트에 연결하도록 설정
+  - 해당 컨테이너가 호스트의 어떤 포트와 연결됐는지 확인할 필요가 있음
+- `docker port` : 컨테이너와 연결된 호스트의 포트를 확인
+
+<br>
+
+- 이미지 빌드를 시작하면 도커는 가장 먼저 빌드 Context 를 읽어 들인다.
+  - 빌드 Context 는 이미지 생성에 필요한 파일, 소스코드 등등을 담고있는 디렉토리를 의미
+- Context 는 build 명령어의 맨 마지막에 지정된 위치에 있는 파일을 전부 포함한다.
+  - 따라서 Dockerfile 이 위치한 곳에는 이미지 빌드에 필요한 파일만 있는 것이 바람직하며, 루트 디렉토리와 같은 곳에서 이미지를 빌드하지 않도록 주의
+
+<br>
+
+#### 멀티 스테이지를 이용한 Dockerfile 빌드하기
+
+> 17.05 버전 이상을 사용하는 도커 엔진이라면 이미지의 크기를 줄이기 위해 멀티 스테이지(Multi-stage) 빌드 방법을 사용할 수 있다.
+
+- 멀티 스테이지 빌드는 하나의 Dockerfile 안에 여러개의 FROM 이미지를 정의함으로써 빌드 완료 시 최종적으로 생성될 이미지의 크기를 줄이는 역할
+
+```docker
+FROM golang
+ADD main.go /root
+WORKDIR /root
+RUN go build -o /root/mainApp /root/main.go
+
+FROM alpine:latest
+WORKDIR /root
+COPY --from=0 /root/mainApp .
+CMD ["./mainApp"]
+```
+
+- `--from=0` : 첫 번째 FROM 에서 빌드된 이미지의 최종 상태를 의미
+  - 첫 번째 FROM 이미지에서 빌드한 `/root/mainApp` 을 두 번째 이미지로 복사
+- `alpine` : 우분투나 CentOS 에 비해 이미지 크기가 매우 작지만 필수적인 런타임 요소가 포함되어 있는 리눅스 배포판 이미지
+  - 경량화된 애플리케이션 이미지를 간단히 생성가능
+
+<br>
+
+#### 기타 Dockerfile 명령어
+
+- `ENV` : 환경변수 지정
+  - `run -e` 옵션을 사용해 같은 이름의 환경변수를 사용하면 덮어 쓰여진다.
+- `VOLUME` : 빌드된 이미지로 컨테이너를 생성했을 때 호스트와 공유할 컨테이너 내부의 디렉토리를 설정
+- `ARG` : build 명령어를 실행할 때 추가로 입력을 받아 Dockerfile 내에서 사용될 변수의 값을 설정
+- `USER` : USER로 컨테이너 내에서 사용될 사용자 계정의 이름이나 UID 를 설정하면 그 아래의 명령어는 해당 사용자 권한으로 실행
+  - 루트 권한이 필요하지 않다면 USER 를 사용하는 것을 권장
+- `ONBUILD` : 빌드된 이미지를 기반으로 하는 다른 이미지가 Dockerfile로 생성될 때 실행할 명령어를 추가
+- `STOPSIGNAL` : 컨테이너가 정지될 때 사용될 시스템 콜의 종류를 지정
+- `HEALTHCHECK` : 이미지로부터 생성된 컨테이너에서 동작하는 애플리케이션의 상태를 체크하도록 설정
+- `COPY` : 로컬 디렉토리에서 읽어 들인 컨텍스트로부터 이미지에 파일을 복사하는 역할
+  - `COPY` 는 로컬의 파일만 이미지에 추가할 수 있지만, `ADD` 는 외부 URL 및 tar 파일에서도 파일을 추가할 수 있다.
+- `ENTRYPOINT` : 커맨드와 동일하게 컨테이너가 시작될 때 수행할 명령을 지정
+  - CMD 와의 차이점 :
+
+<br>
+
+#### Dockerfile로 빌드할 때 주의할 점
+
+- 하나의 명령어를 \ 로 나눠서 가독성 향상
+- `.dockerignore` 파일을 작성해 불필요한 파일을 빌드 컨텍스트에 포함하지 않는 것
+- 빌드 캐시를 이용해 기존에 사용했던 이미지 레이어를 재사용
+
+<br>
 
 ### 도커 데몬
 
