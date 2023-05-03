@@ -15,6 +15,8 @@
     - [제어구조](#%EC%A0%9C%EC%96%B4%EA%B5%AC%EC%A1%B0)
         - [If](#if)
         - [For](#for)
+        - [Switch](#switch)
+        - [타입 switch](#%ED%83%80%EC%9E%85-switch)
 
 <!-- /TOC -->
 
@@ -215,3 +217,84 @@ for { }
   ```
 
 - string의 경우, range 는 UTF-8 파싱에 의한 개별적인 유니코드 문자를 처리하는데 유용할 것이다. 잘못된 인코딩은 하나의 바이트를 제거하고 U+FFFD 룬 문자로 대체할 것이다.
+
+<br>
+
+### Switch
+
+> Go언어에서 스위치는 C언어에서 보다 더 일반적인 표현이 가능하다.
+- 표현식은 상수이거나 꼭 정수일 필요가 없고 case 구문은 위에서부터 바닥까지 해당 구문이 true 가 아닌 동안에 일치하는 값을 찾을때까지 계속 값을 비교한다.
+
+  ```go
+  func unhex(c byte) byte {
+    switch {
+      case '0' <= c && c <= '9':
+        return c - '0'
+      case 'a' <= c && c <= 'f':
+        return c - 'a' + 10
+      case 'A' <= c && c <= 'F':
+        return c - 'A' + 10
+    }
+    return 0
+  }
+  ```
+
+- switch 에서는 자동으로 다음으로 통과하는 동작이 없지만, 콤마로 구분된 목록을 사용해 case 들을 표현할 수 있다.
+
+  ```go
+  func shouldEscape(c byte) bool {
+    switch c {
+      case ' ', '?', '&', '=', '#', '+', '%':
+        return true
+    }
+    return false
+  }
+  ```
+
+- Go 에서도 break 구문으로 switch 를 일찍 종료하기 위해 쓸 수 있다. 스위치가 아닌 둘러쌓인 반복문을 중단하는 것도 가능하다.
+
+  ```go
+  Loop:
+    for n := 0; n < len(src); n += size {
+      switch {
+        case src[n] < sizeOne:
+          if validateOnly {
+            break
+          }
+          size = 1
+          update(src[n])
+        case src[n] < sizeTwo:
+          if n+1 >= len(src) {
+            err = errShortInput
+            break Loop
+          }
+          if validateOnly {
+            break
+          }
+          size = 2
+          update(src[n] + src[n+1]<<shift)
+      }
+    }
+  ```
+
+<br>
+
+### 타입 switch
+
+> 스위치 구문은 인터페이스 변수의 동적 타입을 확인하는데 사용될 수도 있다.
+```go
+var t interface{}
+t = functionOfSomeType()
+switch t := t.(type) {
+  default:
+    fmt.Printf("unexpected type %T\n", t)
+  case bool:
+    fmt.Printf("boolean %T\n", t)
+  case int:
+    fmt.Printf("integer %T\n", t)
+  case *bool:
+    fmt.Printf("pointer to boolean %T\n", t)
+  case *int:
+    fmt.Printf("pointer to integer %T\n", t)
+}
+```
