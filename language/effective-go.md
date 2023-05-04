@@ -17,6 +17,9 @@
         - [For](#for)
         - [Switch](#switch)
         - [타입 switch](#%ED%83%80%EC%9E%85-switch)
+    - [함수Functions](#%ED%95%A8%EC%88%98functions)
+        - [Multiple return values](#multiple-return-values)
+        - [Defer](#defer)
 
 <!-- /TOC -->
 
@@ -296,5 +299,65 @@ switch t := t.(type) {
     fmt.Printf("pointer to boolean %T\n", t)
   case *int:
     fmt.Printf("pointer to integer %T\n", t)
+}
+```
+
+<br>
+
+## 함수(Functions)
+
+### Multiple return values
+
+> Go 언어가 가지고 있는 특징 중 하나는 함수와 메서드가 여러 값을 반환 할 수 있다는 것이다.
+- C 프로그램에서 대역 내 에러에서 EOF 를 나타내기 위해 -1 과 같은 값을 반환하고 주소로 전달한 매개변수를 변환시키는 것과 같은 문법을 개선
+
+```go
+func (file *File) Write(b []byte) (n int, err error)
+```
+<br>
+### Named result parameters
+> Go 함수에서는 반환 "인자"나 결과 "인자"에 이름을 부여하고 인자로 들어온 매개변수처럼 일반변수로 사용할 수 있다.
+- 이름을 부여하면, 해당 변수는 함수가 시작될 때 해당 타입의 제로 값으로 초기화 된다.
+- 함수가 인자 없이 반환문을 수행할 경우에는 결과 매개변수의 현재 값이 반환 값으로 사용된다.
+```go
+func ReadFull(r Reader, buf []byte) (n int, err error) {
+  for len(buf) > 0 && err == nil {
+    var nr int
+    nr, err = r.Read(buf)
+    n += nr
+    buf = buf[nr:]
+  }
+  return
+}
+```
+
+<br>
+
+### Defer
+
+> Go 의 `defer` 문은 `defer`를 실행하는 함수가 반환되기 전에 즉각 함수 호출을 실행하도록 예약한다.
+- 함수가 어떤 실행경로를 통해 반환을 하던간에 자원을 해지 해야 하는 경우에 효과적인 방법이다.
+- 가장 대표적인 예제로는 Mutex 의 잠금을 풀거나 파일을 닫는 것이 있다.
+
+```go
+func Contents(filename string) (string, error) {
+  f, err := os.Open(filename)
+  if err != nil {
+    return "", err
+  }
+  defer f.Close() // f.Close will run when we're finished.
+  var result []byte
+  buf := make([]byte, 100)
+  for {
+    n, err := f.Read(buf[0:])
+    result = append(result, buf[0:n]...)
+    if err != nil {
+      if err == io.EOF {
+        break
+      }
+      return "", err
+    }
+  }
+  return string(result), nil
 }
 ```
